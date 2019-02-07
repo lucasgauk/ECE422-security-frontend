@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpService} from '../../service/http.service';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../model/user';
+import {RequestService} from "../../service/request.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -9,13 +10,21 @@ import {User} from '../../model/user';
 })
 export class LoginComponent implements OnInit {
 
-  string: String;
-  user: User
+  user: User = new User();
 
-  constructor(private httpService: HttpService<User>) { }
+  constructor(private requestService: RequestService, private router: Router) { }
 
   ngOnInit() {
-    this.httpService.getMany('', 'todos/1').subscribe(data => this.string = (User.fromJson(data)).toString() );
+  }
+
+  verifyUser() {
+      this.requestService.verifyUser(this.user.username, this.user.password)
+          .subscribe(data => {
+            if (User.fromJson(data).id) {
+              console.log('Success!');
+              this.router.navigateByUrl('/file')
+            }
+          });
   }
 
 }

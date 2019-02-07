@@ -6,7 +6,7 @@ import {environment} from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService<T> {
+export class HttpService {
 
   constructor(
     private httpClient: HttpClient, // Client to make requests.
@@ -15,7 +15,7 @@ export class HttpService<T> {
   getMany(queryParams: any, endPoint: string): Observable<any> {
     const apiUrl = `${environment.apiUrl}/${endPoint}`;
     return this.httpClient
-      .get<T>(apiUrl, {params: queryParams});
+      .get(apiUrl, {params: queryParams});
   }
 
 }

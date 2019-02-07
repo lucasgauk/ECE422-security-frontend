@@ -1,3 +1,24 @@
-<mat-card>
-  HTTP REQUEST: {{this.string}}
-</mat-card>
+<div class="container" style="padding-top: 1.8vw;">
+  <mat-accordion id="dashboardConfig">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>LOGIN</mat-panel-title>
+      </mat-expansion-panel-header>
+      <form>
+        <div>
+          <mat-form-field>
+            <input name="username" matInput [(ngModel)]="this.user.username" placeholder="Username">
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input name="password" matInput [(ngModel)]="this.user.password" placeholder="Password">
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button (click)="verifyUser()">Login</button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+

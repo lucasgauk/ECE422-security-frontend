@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-title>
+    Your files
+  </mat-card-title>
+  <mat-list>
+    <mat-list-item *ngFor="let file of this.files">
+      <button mat-button (click)="checkAndLoad(file)">{{file.path}} <mat-icon>{{file.fileType === 'folder' ? 'folder' : 'attachment'}}</mat-icon></button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <button mat-button (click)="load(previousLocation)"><mat-icon>keyboard_backspace</mat-icon></button>
+</mat-card>
