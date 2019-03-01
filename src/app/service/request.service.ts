@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpService} from "./http.service";
-import {Observable} from "rxjs";
-import {User} from "../model/user";
-import {FileResponse} from "../model/file-response";
-import {FileTypeResponse} from "../model/file-type-response";
+import {HttpService} from './http.service';
+import {Observable} from 'rxjs';
+import {User} from '../model/user';
+import {FileResponse} from '../model/file-response';
+import {FileTypeResponse} from '../model/file-type-response';
+import {FileUpload} from '../model/file-upload';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,11 @@ export class RequestService {
     getBytes(path: string): Observable<FileResponse> {
       const qp = {};
       qp['path'] = path;
-      return this.httpService.getMany(qp, 'file/bytes')
+      return this.httpService.getMany(qp, 'file/bytes');
+    }
+
+    uploadFile(uploadRequest: FileUpload): Observable<any> {
+      return this.httpService.postTo(uploadRequest, 'file');
     }
 }
 

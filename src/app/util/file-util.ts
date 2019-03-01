@@ -8,13 +8,13 @@ export class FileUtil {
         }
         const byteArray = new Uint8Array(byteNumbers);
 
-        return new Blob([byteArray], {type: "application/octet-stream"});
+        return new Blob([byteArray], {type: 'application/octet-stream'});
     }
 
     public static saveAs(blob: Blob, fileName: string, extension: string) {
         const url = window.URL.createObjectURL(blob);
 
-        const anchorElem = document.createElement("a");
+        const anchorElem = document.createElement('a');
         anchorElem.href = url;
         anchorElem.download = fileName + '.' + extension;
 

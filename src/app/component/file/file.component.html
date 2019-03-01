@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-title>
-    Your files
+    Your files <button mat-button (click)="addFiles()" style="width: auto; float: right"><mat-icon>cloud_upload</mat-icon></button>
+    <input type="file" #file style="display: none" (change)="onFilesAdded()" id="upload"/>
   </mat-card-title>
   <mat-list>
     <mat-list-item *ngFor="let file of this.files">
