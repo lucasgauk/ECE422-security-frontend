@@ -14,14 +14,14 @@ export class HttpService {
 
   getMany(queryParams: any, endPoint: string): Observable<any> {
     const apiUrl = `${environment.apiUrl}/${endPoint}`;
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('dick:dick')}); // TODO: Get user from cookie or something.
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('lucas:spartan')}); // TODO: Get user from cookie or something.
     return this.httpClient
       .get(apiUrl, {headers: headers, params: queryParams});
   }
 
   postTo(queryParams: any, endPoint: string): Observable<any> {
     const apiUrl = `${environment.apiUrl}/${endPoint}`;
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('dick:dick')}); // TODO: Get user from cookie or something.
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('lucas:spartan')}); // TODO: Get user from cookie or something.
     return this.httpClient
         .post(apiUrl, queryParams, {headers: headers});
   }

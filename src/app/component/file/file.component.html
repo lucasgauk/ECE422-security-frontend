@@ -5,7 +5,7 @@
   </mat-card-title>
   <mat-list>
     <mat-list-item *ngFor="let file of this.files">
-      <button mat-button (click)="checkAndLoad(file)">{{file.path}} <mat-icon>{{file.fileType === 'folder' ? 'folder' : 'attachment'}}</mat-icon></button>
+      <button mat-button (click)="checkAndLoad(file)">{{file.path}} <mat-icon>{{file.fileType === 'folder' ? 'folder' : 'attachment'}}</mat-icon> <b> {{file.createdAt < file.modifiedAt ? 'MODIFIED!' : ''}} </b></button>
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
