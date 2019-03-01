@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 
@@ -14,8 +14,16 @@ export class HttpService {
 
   getMany(queryParams: any, endPoint: string): Observable<any> {
     const apiUrl = `${environment.apiUrl}/${endPoint}`;
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('dick:dick')}); // TODO: Get user from cookie or something.
     return this.httpClient
-      .get(apiUrl, {params: queryParams});
+      .get(apiUrl, {headers: headers, params: queryParams});
+  }
+
+  postTo(queryParams: any, endPoint: string): Observable<any> {
+    const apiUrl = `${environment.apiUrl}/${endPoint}`;
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('dick:dick')}); // TODO: Get user from cookie or something.
+    return this.httpClient
+        .post(apiUrl, queryParams, {headers: headers});
   }
 
 }
