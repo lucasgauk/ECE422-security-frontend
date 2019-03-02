@@ -21,8 +21,7 @@ export class LoginComponent implements OnInit {
       this.requestService.verifyUser(this.user.username, this.user.password)
           .subscribe(data => {
             if (User.fromJson(data).id) {
-              console.log('Success!');
-              this.router.navigateByUrl('/file');
+              this.router.navigate(['/file'], {queryParams: {username: this.user.username, password: this.user.password}});
             }
           });
   }

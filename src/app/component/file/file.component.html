@@ -1,13 +1,17 @@
 <mat-card>
   <mat-card-title>
-    Your files <button mat-button (click)="addFiles()" style="width: auto; float: right"><mat-icon>cloud_upload</mat-icon></button>
+    Your files
     <input type="file" #file style="display: none" (change)="onFilesAdded()" id="upload"/>
   </mat-card-title>
   <mat-list>
     <mat-list-item *ngFor="let file of this.files">
-      <button mat-button (click)="checkAndLoad(file)">{{file.path}} <mat-icon>{{file.fileType === 'folder' ? 'folder' : 'attachment'}}</mat-icon> <b> {{file.createdAt < file.modifiedAt ? 'MODIFIED!' : ''}} </b></button>
+      <button mat-button (click)="checkAndLoad(file)" style="width: 95%">{{file.path}} <mat-icon>{{file.fileType === 'folder' ? 'folder' : 'attachment'}}</mat-icon> <b>
+        {{file.createdAt < file.modifiedAt ? 'MODIFIED!' : ''}} </b></button>
+      <button mat-button (click)="deleteFile(file.path)" style="float: right; width: 5%;"><mat-icon>delete</mat-icon></button>
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
-  <button mat-button (click)="load(previousLocation)"><mat-icon>keyboard_backspace</mat-icon></button>
+  <button mat-button (click)="logout()" style="width: auto;"><mat-icon>home</mat-icon></button>
+  <button mat-button (click)="load(selectedLocation)" style="width: auto"><mat-icon>refresh</mat-icon></button>
+  <button mat-button (click)="addFiles()" style="width: auto"><mat-icon>cloud_upload</mat-icon></button>
 </mat-card>
