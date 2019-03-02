@@ -12,16 +12,16 @@ export class HttpService {
     private httpClient: HttpClient, // Client to make requests.
   ) {}
 
-  getMany(queryParams: any, endPoint: string): Observable<any> {
+  getMany(queryParams: any, endPoint: string, username: string, password: string): Observable<any> {
     const apiUrl = `${environment.apiUrl}/${endPoint}`;
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('lucas:spartan')}); // TODO: Get user from cookie or something.
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(`${username}:${password}`)});
     return this.httpClient
       .get(apiUrl, {headers: headers, params: queryParams});
   }
 
-  postTo(queryParams: any, endPoint: string): Observable<any> {
+  postTo(queryParams: any, endPoint: string, username: string, password: string): Observable<any> {
     const apiUrl = `${environment.apiUrl}/${endPoint}`;
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('lucas:spartan')}); // TODO: Get user from cookie or something.
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(`${username}:${password}`)});
     return this.httpClient
         .post(apiUrl, queryParams, {headers: headers});
   }

@@ -6,6 +6,7 @@ import {FileTypeResponse} from '../../model/file-type-response';
 import {FileUpload} from '../../model/file-upload';
 import {EncryptUtil} from "../../util/encrypt-util";
 import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-file',
@@ -20,7 +21,7 @@ export class FileComponent implements OnInit {
 
   @ViewChild('file') file: ElementRef;
 
-  constructor(private requestService: RequestService) {}
+  constructor(private requestService: RequestService, private router: Router) {}
 
   ngOnInit() {
     this.load();
@@ -89,6 +90,16 @@ export class FileComponent implements OnInit {
       }
       return filename;
     }
+  }
+
+  deleteFile(path: string) {
+    this.requestService.deleteFile(path).subscribe(() => {
+        this.load(this.selectedLocation);
+    });
+  }
+
+  logout() {
+    this.router.navigateByUrl('');
   }
 
 }
