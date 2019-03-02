@@ -4,6 +4,8 @@ import {FileResponse} from '../../model/file-response';
 import {FileUtil} from '../../util/file-util';
 import {FileTypeResponse} from '../../model/file-type-response';
 import {FileUpload} from '../../model/file-upload';
+import {EncryptUtil} from "../../util/encrypt-util";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-file',
@@ -46,7 +48,7 @@ export class FileComponent implements OnInit {
   downloadBytes(file: FileTypeResponse) {
     this.requestService.getBytes(file.path).subscribe(response => {
         const fileResponse = FileResponse.fromJson(response);
-        FileUtil.saveAs(FileUtil.makeBlob(fileResponse.bytes), FileUtil.getFileName(file.path), fileResponse.extension);
+        FileUtil.saveAs(FileUtil.makeBlob(EncryptUtil.decryptString(response.bytes, environment.encryptCode)), FileUtil.getFileName(file.path), fileResponse.extension);
     });
   }
 
@@ -57,7 +59,6 @@ export class FileComponent implements OnInit {
   onFilesAdded() {
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      console.log(fileReader.result.substring(fileReader.result.lastIndexOf(',') + 1));
       this.uploadFile(fileReader.result.substring(fileReader.result.lastIndexOf(',') + 1),
           this.getFilePath().substring(this.getFilePath().lastIndexOf('.') + 1),
           '/' + this.getFilePath());
@@ -68,12 +69,12 @@ export class FileComponent implements OnInit {
 
   uploadFile(fileBytes: string, extension: string, fileName: string) {
     const upload = new FileUpload(
-        fileBytes,
+        EncryptUtil.encryptString(fileBytes, environment.encryptCode), // TODO: Lol this is dumb.
         extension,
         fileName,
         this.previousLocation ? this.previousLocation.path : ''
     );
-    this.requestService.uploadFile(upload).subscribe(response => {
+    this.requestService.uploadFile(upload).subscribe(() => {
       this.load(this.selectedLocation);
     });
   }
