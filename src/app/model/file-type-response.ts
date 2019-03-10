@@ -1,12 +1,17 @@
+import {EncryptUtil} from '../util/encrypt-util';
+import {environment} from '../../environments/environment';
+
 export class FileTypeResponse {
 
+    private _id: number;
     private _path: string;
     private _fileType: string;
     private _createdAt: Date;
     private _modifiedAt: Date;
 
 
-    constructor(path: string, fileType: string, createdAt: Date, modifiedAt: Date) {
+    constructor(id: number, path: string, fileType: string, createdAt: Date, modifiedAt: Date) {
+        this._id = id;
         this._path = path;
         this._fileType = fileType;
         this._createdAt = createdAt;
@@ -15,13 +20,23 @@ export class FileTypeResponse {
         this._modifiedAt.setMilliseconds(0);
     }
 
-    public static fromJson(json:any): FileTypeResponse {
+    public static fromJson(json: any): FileTypeResponse {
+        const path: string = json['path'];
         return new FileTypeResponse(
-            json['path'],
+            json['id'],
+            EncryptUtil.decryptString(EncryptUtil.deSanitizeString(path.substring(0, path.lastIndexOf('.'))), environment.encryptCode),
             json['fileType'],
             new Date(json['createdAt']),
             new Date(json['modifiedAt'])
-        )
+        );
+    }
+
+    get id(): number {
+        return this._id;
+    }
+
+    set id(value: number) {
+        this._id = value;
     }
 
     get path(): string {

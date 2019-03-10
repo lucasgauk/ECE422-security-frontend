@@ -1,7 +1,7 @@
 export class FileDelete {
-    public path: string;
+    public fileId: number;
 
-    constructor(path: string) {
-        this.path = path;
+    constructor(fileId: number) {
+        this.fileId = fileId;
     }
 }

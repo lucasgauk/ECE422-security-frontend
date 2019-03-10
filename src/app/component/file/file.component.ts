@@ -4,9 +4,9 @@ import {FileResponse} from '../../model/file-response';
 import {FileUtil} from '../../util/file-util';
 import {FileTypeResponse} from '../../model/file-type-response';
 import {FileUpload} from '../../model/file-upload';
-import {EncryptUtil} from "../../util/encrypt-util";
-import {environment} from "../../../environments/environment";
-import {Router} from "@angular/router";
+import {EncryptUtil} from '../../util/encrypt-util';
+import {environment} from '../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-file',
@@ -47,9 +47,10 @@ export class FileComponent implements OnInit {
   }
 
   downloadBytes(file: FileTypeResponse) {
-    this.requestService.getBytes(file.path).subscribe(response => {
-        const fileResponse = FileResponse.fromJson(response);
-        FileUtil.saveAs(FileUtil.makeBlob(EncryptUtil.decryptString(response.bytes, environment.encryptCode)), FileUtil.getFileName(file.path), fileResponse.extension);
+    this.requestService.getBytes(file.id).subscribe(response => {
+          const fileResponse = FileResponse.fromJson(response);
+          FileUtil.saveAs(FileUtil.makeBlob(EncryptUtil.decryptString(response.bytes, environment.encryptCode)),
+              FileUtil.getFileName(file.path), fileResponse.extension);
     });
   }
 
@@ -70,9 +71,9 @@ export class FileComponent implements OnInit {
 
   uploadFile(fileBytes: string, extension: string, fileName: string) {
     const upload = new FileUpload(
-        EncryptUtil.encryptString(fileBytes, environment.encryptCode), // TODO: Lol this is dumb.
+        EncryptUtil.encryptString(fileBytes, environment.encryptCode),
         extension,
-        fileName,
+        EncryptUtil.sanitizeString(EncryptUtil.encryptString(fileName.substring(0, fileName.lastIndexOf('.')), environment.encryptCode)),
         this.previousLocation ? this.previousLocation.path : ''
     );
     this.requestService.uploadFile(upload).subscribe(() => {
@@ -92,8 +93,8 @@ export class FileComponent implements OnInit {
     }
   }
 
-  deleteFile(path: string) {
-    this.requestService.deleteFile(path).subscribe(() => {
+  deleteFile(fileId: number) {
+    this.requestService.deleteFile(fileId).subscribe(() => {
         this.load(this.selectedLocation);
     });
   }
