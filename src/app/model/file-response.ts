@@ -20,7 +20,7 @@ export class FileResponse {
             json['extension'],
             new Date(json['createdAt']),
             new Date(json['modifiedAt'])
-        )
+        );
     }
 
     get bytes(): string {
