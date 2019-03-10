@@ -50,7 +50,7 @@ export class FileComponent implements OnInit {
     this.requestService.getBytes(file.id).subscribe(response => {
           const fileResponse = FileResponse.fromJson(response);
           FileUtil.saveAs(FileUtil.makeBlob(EncryptUtil.decryptString(response.bytes, environment.encryptCode)),
-              FileUtil.getFileName(file.path), fileResponse.extension);
+              file.path.replace('/', ''), fileResponse.extension);
     });
   }
 
