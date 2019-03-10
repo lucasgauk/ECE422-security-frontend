@@ -5,7 +5,7 @@ import {User} from '../model/user';
 import {FileResponse} from '../model/file-response';
 import {FileTypeResponse} from '../model/file-type-response';
 import {FileUpload} from '../model/file-upload';
-import {FileDelete} from "../model/file-delete";
+import {FileDelete} from '../model/file-delete';
 
 @Injectable({
   providedIn: 'root'
@@ -32,9 +32,9 @@ export class RequestService {
         return this.httpService.getMany(qp, 'file', this._username, this._password);
     }
 
-    getBytes(path: string): Observable<FileResponse> {
+    getBytes(id: number): Observable<FileResponse> {
       const qp = {};
-      qp['path'] = path;
+      qp['fileId'] = id;
       return this.httpService.getMany(qp, 'file/bytes', this._username, this._password);
     }
 
@@ -42,8 +42,8 @@ export class RequestService {
       return this.httpService.postTo(uploadRequest, 'file', this._username, this._password);
     }
 
-    deleteFile(path: string): Observable<any> {
-      return this.httpService.postTo(new FileDelete(path), 'file/delete', this._username, this._password);
+    deleteFile(id: number): Observable<any> {
+      return this.httpService.postTo(new FileDelete(id), 'file/delete', this._username, this._password);
     }
 }
 
